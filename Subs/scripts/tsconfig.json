@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "target": "es6"
+  },
+  "files": [
+    "./room.ts",
+    "./CreateBackground.ts",
+    "./CreateCircle.ts"
+  ],
+  "compileOnSave": true
+}
