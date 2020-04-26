@@ -30,12 +30,16 @@ namespace Subs
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(
-                    Configuration.GetConnectionString("DefaultConnection"), x=>x.MigrationsAssembly("Subs.Infrastructure")));
+                    Configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("Subs.Infrastructure")));
+
+            services.AddDbContext<RoomDbContext>(options =>
+            options.UseNpgsql(
+                Configuration.GetConnectionString("DefaultConnection"), x => x.MigrationsAssembly("Subs.Infrastructure")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            
+
 
             services.Configure<IdentityOptions>(options => //конфигурация требуемого при регистрации пароля
             {
@@ -46,7 +50,7 @@ namespace Subs
                 options.Password.RequiredLength = 4;
                 options.Password.RequiredUniqueChars = 0;
             });
-            
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -84,13 +88,13 @@ namespace Subs
 
             CreateRoles(serviceProvider).Wait();
         }
-        
+
         private async Task CreateRoles(IServiceProvider serviceProvider)
         {
             //создание ролей
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
-            string[] roleNames = { "admin", "user"};
+            string[] roleNames = { "admin", "user" };
             IdentityResult roleResult;
 
             foreach (var roleName in roleNames)
@@ -107,12 +111,12 @@ namespace Subs
             {
                 UserName = Configuration["AdminLogin"]
             };
-            
+
             string adminPassword = Configuration["AdminPassword"];
 
-            var createdAdmin=await UserManager.FindByNameAsync(Configuration["AdminLogin"]);
+            var createdAdmin = await UserManager.FindByNameAsync(Configuration["AdminLogin"]);
 
-            if(createdAdmin == null)
+            if (createdAdmin == null)
             {
                 var createPowerUser = await UserManager.CreateAsync(admin, adminPassword);
                 if (createPowerUser.Succeeded)

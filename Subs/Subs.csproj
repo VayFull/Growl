@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="scripts\CreateRoom.ts" />
     <None Remove="scripts\room.ts" />
   </ItemGroup>
 

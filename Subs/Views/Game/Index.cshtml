@@ -1,7 +1,41 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
-}
+﻿@model Room
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <h1>Комнаты</h1>
+    <button id="button" class="button btn-primary">Создать комнату</button>
 
-<h1>Index</h1>
+    @foreach (var item in ViewBag.Rooms)
+    {
+        <p>@item.Name <a href="/Game/Room/@item.Id">Войти</a></p>
+    }
+
+    <div id="window" class="window">
+        <div class="window-content">
+            <span class="close">&times;</span>
+            <h3>Добавление комнаты</h3>
+            <form method="post">
+                <p>Название комнаты:</p>
+                <input type="text" class="control-label col-sm-2" required name="Name" />
+                <p>Приватная ли комната:</p>
+                <input type="checkbox" name="IsPrivate"/>
+                <p>Максимальное количество людей в лобби</p>
+                <input type="number" class="control-label col-sm-2" name="MaxPeople" required/>
+                <p>Частота появления кружков(в мс)</p>
+                <input type="number" class="control-label col-sm-2" name="Frequent" required/>
+                <p>Сколько будет длиться раунд (в мс)</p>
+                <input type="number" class="control-label col-sm-2" name="RoundTime" required/>
+                <br />
+                <br />
+                <input type="submit" class="button btn-primary" value="Добавить!"/>
+            </form>
+        </div>
+    </div>
+    <script src="~/scripts/CreateRoom.js"></script>
+</body>
+</html>
+
+
 

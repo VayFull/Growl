@@ -3,18 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <script src="~/scripts/room.js"></script>
-    <script src="~/scripts/CreateBackground.js"></script>
-    <script src="~/scripts/CreateCircle.js"></script>
     <title></title>
 </head>
 <body>
-    <div id="message"></div>
-    <div>
-        Compiler: <input id="compiler" value="TypeScript" onkeyup="document.getElementById('message').innerText = sayHello()" /><br />
-        Framework: <input id="framework" value="ASP.NET" onkeyup="document.getElementById('message').innerText = sayHello()" />
-    </div>
-    <button onclick="CreateCircle()">Create Red</button>
-    <div id="picture"></div>
-    <button onclick="GetHelloWorld()">Create background</button>
+    <p id="count">0</p>
+    <canvas id="canvas"></canvas>
+    <script src="~/scripts/Start.js"></script>
 </body>
 </html>

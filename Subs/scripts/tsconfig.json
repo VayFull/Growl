@@ -7,8 +7,8 @@
   },
   "files": [
     "./room.ts",
-    "./CreateBackground.ts",
-    "./CreateCircle.ts"
+    "Start.ts",
+    "CreateRoom.ts"
   ],
   "compileOnSave": true
 }

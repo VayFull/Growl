@@ -1,7 +1,14 @@
 function GetHelloWorld() {
-    var image = new Image();
-    image.useMap = "/images/black.png"
-    var node = document.createElement("img");
-    node.setAttribute("src", image.useMap);
-    document.getElementById("picture").appendChild(node); 
+    let canvas = document.getElementById('canvas') as HTMLCanvasElement;
+
+    let width = 1280;
+    let height = 720;
+
+    canvas.setAttribute('width', `${width}`);
+    canvas.setAttribute('height', `${height}`);
+
+    let ctx = canvas.getContext('2d');
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0,0,width,height);
 }
+
