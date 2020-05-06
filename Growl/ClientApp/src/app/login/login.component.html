@@ -1,0 +1,11 @@
+<form>
+  <div class="form-group">
+    <label for="login">Логин</label>
+    <input type="text" #login class="form-control"/>
+  </div>
+  <div class="form-group">
+    <label for="password">Пароль</label>
+    <input type="password" #password class="form-control"/>
+  </div>
+  <button (click)="entry(login.value, password.value)" class="button btn-primary">Войти</button>
+</form>

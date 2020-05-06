@@ -1,0 +1,25 @@
+<button id="startgamebtn" (click)="initGame()">Start game</button>
+<canvas id="canvas"></canvas>
+<div>
+  <button id="chatBtn"class="btn-primary fixed-bottom chatButton">Чат</button>
+</div>
+<div id="window" class="window">
+  <div class="window-content">
+    <span class="close">&times;</span>
+    <div class="chat-message">
+      <textarea id="messages" readonly class="textarea-message"></textarea>
+    </div>
+    <div class="chat-sender">
+      <textarea class="form-control" (keydown)="keyDownFunction($event)" id="message"></textarea>
+    </div>
+    <div (click)="sendMessage()">
+      <i class="far fa-paper-plane send-message-icon"></i>
+    </div>
+  </div>
+</div>
+
+<div class="display-score">
+  <ul id="score" class="score-players">
+  </ul>
+</div>
+

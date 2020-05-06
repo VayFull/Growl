@@ -1,0 +1,15 @@
+<form>
+  <div class="form-group">
+    <label for="login">Логин</label>
+    <input required #login type="text" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label for="password">Пароль</label>
+    <input id="password" #password required type="password" minlength="3" maxlength="15" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label for="confirmpassword">Подтверждение пароля</label>
+    <input id="confirmpassword" #confirmpassword required type="password" minlength="3" pattern="{{password.value}}" maxlength="15" class="form-control" />
+  </div>
+  <button class="button btn-primary" (click)="add(login.value, password.value)">Завершить</button>
+</form>

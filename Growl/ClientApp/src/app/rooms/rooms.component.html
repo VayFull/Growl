@@ -1,0 +1,63 @@
+<h1>Список комнат</h1>
+<button class="button btn-primary" (click)="isCreatingRoom=!isCreatingRoom">Создать новую комнату</button>
+<div *ngIf="isCreatingRoom==true">
+  <button class="close" (click)="isCreatingRoom=false">x</button>
+  <form #form="ngForm" (ngSubmit)="createRoom()">
+    <div class="form">
+      <div class="form-group col-xs-3">
+        <label for="name">Название</label>
+        <input #name [(ngModel)]="newRoom.name" name="name" id="name" class="form-control" type="text" required maxlength="30" />
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" name="isPrivate" [(ngModel)]="newRoom.isPrivate" type="checkbox" #isPrivate (change)="0" id="isPrivate">
+        <label for="isPrivate" class="form-check-label">приватная</label>
+      </div>
+
+      <div class="form-group col-xs-3" *ngIf="isPrivate.checked">
+        <label for="password">Пароль</label>
+        <input class="form-control" name="password" [(ngModel)]="newRoom.password" id="password" #password type="password" required maxlength="10" />
+      </div>
+
+      <h4 style="text-align:center">Настройки игры</h4>
+
+      <div class="form-row">
+        <div class="form-group col-sm">
+          <label for="frequency">Частота появления кругов (от 1 до 10000)</label>
+          <input #frequency [(ngModel)]="newRoom.frequency" min="1" max="10000" name="frequency" type="number" class="form-control" id="frequency">
+        </div>
+
+        <div class="form-group col-sm">
+          <label for="circleNumber">число кругов (от 1 до 10000)</label>
+          <input #circleNumber [(ngModel)]="newRoom.circleNumber" min="1" max="10000" name="circleNumber" type="number" class="form-control" id="circleNumber">
+        </div>
+
+        <div class="form-group col-sm">
+          <label for="circleRadius">радиус кругов (от 1 до 75)
+          <span class="question-explanation">
+            <i class="far fa-question-circle"></i>
+            </span>
+          </label>
+          <input #circleRadius [(ngModel)]="newRoom.circleRadius" name="circleRadius" min="1" max="75" type="number" class="form-control" id="circleRadius">
+        </div>
+      </div>
+
+      <button class="button btn-primary">создать</button>
+    </div>
+  </form>
+</div>
+<br />
+<br />
+<div *ngIf="Rooms | async">
+  <div *ngFor="let room of Rooms | async; trackBy:trackByRoomId" class="card" style="width: 100%;">
+    <div class="card-body">
+      <h5 class="card-title">{{room.name}}</h5>
+      <p>создатель комнаты: {{room.login}}</p>
+      <p>частота появления: {{room.frequency}}</p>
+      <p>число кругов: {{room.circleNumber}}</p>
+      <p>радиус кругов: {{room.circleRadius}}</p>
+      <a href="./room/{{room.id}}" class="btn btn-primary">Войти</a>
+    </div>
+  </div>
+</div>
+
