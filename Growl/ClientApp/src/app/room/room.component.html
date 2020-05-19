@@ -1,4 +1,9 @@
 <button id="startgamebtn" (click)="initGame()">Start game</button>
+<div id="endmenu" hidden>
+  <p style="font-size:30px">Игра окончена! Подождите, пока создатель комнаты рестартнет или создайте свою!</p>
+  <button class="btn-primary" (click)="exitRoom()">Выйти из комнаты</button>
+  <br />
+</div>
 <canvas id="canvas"></canvas>
 <div>
   <button id="chatBtn"class="btn-primary fixed-bottom chatButton">Чат</button>

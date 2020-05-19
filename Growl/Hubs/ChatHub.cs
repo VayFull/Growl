@@ -24,8 +24,8 @@ namespace Growl.Hubs
         public async Task AddToGroup(string login, int roomId)
         {
             var groupName = $"room{roomId}";
-            
-            _chatUsers.Add(Context.ConnectionId, new RoomConnection { Score=0, RoomId=roomId, Login=login, GroupName=groupName });
+
+            _chatUsers.Add(Context.ConnectionId, new RoomConnection { Score = 0, RoomId = roomId, Login = login, GroupName = groupName });
 
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
@@ -70,18 +70,31 @@ namespace Growl.Hubs
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, info.GroupName);
             await Clients.Group(info.GroupName).SendAsync("notificationmessage", info.Login, $"{info.Login} отсоединился!");
             _chatUsers.Remove(Context.ConnectionId);
-            
+
         }
 
         public async Task StartGame(int roomId, int numberOfCircles, int frequency, int radius, int canvasWidth, int canvasHeight, string roomCreator)
         {
+            _circles.RemoveAll(x => x.RoomId == roomId);
+            var keys = _chatUsers.Where(x => x.Value.RoomId == roomId).Select(x => x.Key).ToList();
+            foreach (var key in keys)
+            {
+                _chatUsers[key].Score = 0;
+            }
             var groupName = $"room{roomId}";
             await Clients.Group(groupName).SendAsync("startgame", frequency, numberOfCircles, radius, roomId, canvasWidth, canvasHeight, roomCreator);
         }
 
-        public Task FinishGame()
+        public async Task RestartGame(int roomId, int numberOfCircles, int frequency, int radius, int canvasWidth, int canvasHeight, string roomCreator, string login)
         {
-            return null;
+            var groupName = $"room{roomId}";
+            await Clients.Group(groupName).SendAsync("restartgame", frequency, numberOfCircles, radius, roomId, canvasWidth, canvasHeight, roomCreator, login);
+        }
+
+        public async Task FinishGame(int roomId, int numberOfCircles, int frequency, int radius, int canvasWidth, int canvasHeight, string roomCreator, string login)
+        {
+            var groupName = $"room{roomId}";
+            await Clients.Group(groupName).SendAsync("finishgame", frequency, numberOfCircles, radius, roomId, canvasWidth, canvasHeight, roomCreator, login);
         }
 
         public async Task RemoveCircle(int xPos, int yPos, int radius, int roomId, string user)

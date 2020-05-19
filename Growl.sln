@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl", "Growl\Growl.csproj", "{C0C1EDE0-E559-43C7-B5CC-5CCE0C791CFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Growl", "Growl\Growl.csproj", "{C0C1EDE0-E559-43C7-B5CC-5CCE0C791CFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.Domain", "Growl.Domain\Growl.Domain.csproj", "{19D104EB-8412-4377-BCC7-DE0F668D8E28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Growl.Domain", "Growl.Domain\Growl.Domain.csproj", "{19D104EB-8412-4377-BCC7-DE0F668D8E28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.Data", "Growl.Data\Growl.Data.csproj", "{64CC719B-A5E3-48E5-863D-EF1605EFE4C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Growl.Data", "Growl.Data\Growl.Data.csproj", "{64CC719B-A5E3-48E5-863D-EF1605EFE4C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Growl.Services", "Growl.Services\Growl.Services.csproj", "{BEB89E81-3764-4609-A409-B6ABCFBAF8CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{64CC719B-A5E3-48E5-863D-EF1605EFE4C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64CC719B-A5E3-48E5-863D-EF1605EFE4C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64CC719B-A5E3-48E5-863D-EF1605EFE4C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEB89E81-3764-4609-A409-B6ABCFBAF8CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEB89E81-3764-4609-A409-B6ABCFBAF8CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEB89E81-3764-4609-A409-B6ABCFBAF8CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEB89E81-3764-4609-A409-B6ABCFBAF8CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

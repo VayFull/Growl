@@ -10,8 +10,8 @@
       </div>
 
       <div class="form-check">
-        <input class="form-check-input" name="isPrivate" [(ngModel)]="newRoom.isPrivate" type="checkbox" #isPrivate (change)="0" id="isPrivate">
-        <label for="isPrivate" class="form-check-label">приватная</label>
+        <input class="form-check-input" name="isPrivate" [(ngModel)]="newRoom.isPrivate" type="checkbox" #isPrivate (change)="0" id="isPrivate" hidden>
+        <label for="isPrivate" class="form-check-label" hidden>приватная</label>
       </div>
 
       <div class="form-group col-xs-3" *ngIf="isPrivate.checked">

@@ -34,6 +34,7 @@ export class SignalRService {
           }
           textarea.value += `\n${now.getHours()}:${now.getMinutes()}:${stringSeconds} ${login}:${message}`;
         });
+
         this.hubConnection.on('notificationmessage', (login: string, message: string) => {
           var now: Date = new Date();
           var textarea = document.getElementById("messages") as HTMLTextAreaElement;
@@ -76,7 +77,7 @@ export class SignalRService {
           });
         });
 
-        this.hubConnection.on("userdisconnect", (login:string) => {
+        this.hubConnection.on("userdisconnect", (login: string) => {
           var toRemove = document.getElementById(`${login}name`) as HTMLUListElement;
           toRemove.remove();
         });
@@ -97,11 +98,13 @@ export class SignalRService {
         this.hubConnection.on("startgame", (frequency: number, numberOfCircles: number, radius: number, roomId: number, canvasWidth: number,
           canvasHeight: number, roomCreator: string) => {
           let canvas = document.getElementById('canvas') as HTMLCanvasElement;
+          canvas.hidden = false;
           let ctx = canvas.getContext('2d');
           canvas.setAttribute('width', `${canvasWidth}`);
           canvas.setAttribute('height', `${canvasHeight}`);
           var btn = document.getElementById('startgamebtn');
-          btn.hidden = true;
+          if(btn!=null)
+            btn.hidden = true;
           ctx.fillStyle = 'black';
           ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
@@ -110,13 +113,13 @@ export class SignalRService {
             var interval = setInterval(() => {
               this.createCircle(radius, roomId, canvasWidth, canvasHeight);
               createdCircles++;
-              if (createdCircles == numberOfCircles) {
+              if (createdCircles == numberOfCircles + 1) {
                 clearInterval(interval);
-                this.finishGame();
+                this.finishGame(frequency, numberOfCircles, radius, roomId, canvasWidth, canvasHeight, roomCreator, login);
               }
             }, frequency);
           }
-          
+
           canvas.addEventListener('click', (event) => {
             let x = event.pageX - canvas.offsetLeft;
             let y = event.pageY - canvas.offsetTop;
@@ -172,9 +175,24 @@ export class SignalRService {
           });
         });
 
-        //this.hubConnection.on("ongamefinish", () => {
-
-        //});
+        this.hubConnection.on("finishgame", (frequency: number, numberOfCircles: number, radius: number, roomId: number, canvasWidth: number,
+          canvasHeight: number, roomCreator: string, login: string) => {
+          login = sessionStorage.getItem("user");
+          var canvas = document.getElementById("canvas");
+          canvas.hidden = true;
+          var restartMenu = document.getElementById("endmenu");
+          restartMenu.hidden = false;
+          if (roomCreator == login) {
+            var button = document.createElement("button");
+            restartMenu.append(button);
+            button.id = "restartGameButton";
+            button.className = "btn-primary";
+            button.innerHTML = "рестарт";
+            button.addEventListener("click", () => {
+              this.startGame(roomId, numberOfCircles, frequency, radius, canvasWidth, canvasHeight, roomCreator);
+            });
+          }
+        });
       })
       .catch(err => console.log('Error while starting connection: ' + err));
   }
@@ -187,8 +205,9 @@ export class SignalRService {
     this.hubConnection.invoke("CreateCircle", radius, roomId, canvasWidth, canvasHeight);
   }
 
-  public finishGame() {
-
+  public finishGame(frequency: number, numberOfCircles: number, radius: number, roomId: number, canvasWidth: number,
+    canvasHeight: number, roomCreator: string, login: string) {
+    this.hubConnection.invoke("FinishGame", roomId, numberOfCircles, frequency, radius, canvasWidth, canvasHeight, roomCreator, login);
   }
 
   public removeCircle(circle: Circle, roomId: number, login: string) {
@@ -216,7 +235,19 @@ export class SignalRService {
     }
   }
 
+  public restartGame(roomId: number, numberOfCircles: number, frequency: number, radius: number, canvasWidth: number, canvasHeight: number, roomCreator: string,
+  login: string) {
+    this.hubConnection.invoke("RestartGame", roomId, numberOfCircles, frequency, radius, canvasWidth, canvasHeight, roomCreator, login)
+  }
+
   public startGame(roomId: number, numberOfCircles: number, frequency: number, radius: number, canvasWidth: number, canvasHeight: number, roomCreator: string) {
+    var restartGameButton = document.getElementById("restartGameButton");
+    if (restartGameButton != null)
+      restartGameButton.remove();
+    var endMenu = document.getElementById("endmenu");
+    endMenu.hidden = true;
+    var canvas = document.getElementById("canvas");
+    canvas.hidden = false;
     this.hubConnection.invoke("StartGame", roomId, numberOfCircles, frequency, radius, canvasWidth, canvasHeight, roomCreator);
   }
 }

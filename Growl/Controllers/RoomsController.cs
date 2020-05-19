@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Growl.Data.Contexts;
 using Growl.Domain.Entities;
+using Growl.Data.Repositories;
 
 namespace Growl.Controllers
 {
@@ -15,10 +16,12 @@ namespace Growl.Controllers
     public class RoomsController : ControllerBase
     {
         private readonly GrowlDbContext _context;
+        private readonly RoomRepository _repository;
 
         public RoomsController(GrowlDbContext context)
         {
             _context = context;
+            _repository = new RoomRepository(context);
         }
 
         // GET: api/Rooms

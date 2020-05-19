@@ -15,9 +15,6 @@ import { Circle } from './circle';
 export class RoomComponent implements OnInit {
   id: number;
 
-  private canvas: HTMLCanvasElement;
-  private context: CanvasRenderingContext2D;
-  private circles: Array<Circle>;
   public room: IRoom = {} as IRoom;
 
   constructor(private route: ActivatedRoute, public roomService: RoomService, public signalRService: SignalRService, private router: Router) {
@@ -33,6 +30,10 @@ export class RoomComponent implements OnInit {
     else {
       textarea.value = "";
     }
+  }
+
+  public exitRoom() {
+    this.router.navigate(['rooms']);
   }
 
   keyDownFunction(event) {
@@ -89,7 +90,7 @@ export class RoomComponent implements OnInit {
     if (sessionStorage.getItem("user") == null) {
       this.router.navigate(['login']);
     }
-    this.id = +this.route.snapshot.paramMap.get('id');
+    this.id = + this.route.snapshot.paramMap.get('id');
 
     this.initChat();
 
@@ -99,16 +100,10 @@ export class RoomComponent implements OnInit {
       error => console.log(error),
       () => {
         var startGameBtn = document.getElementById("startgamebtn");
+        startGameBtn.className = "btn-primary";
         if (sessionStorage.getItem("user") != this.room.login) {
           startGameBtn.remove();
         }
       });
   }
-}
-
-function GameOver() {
-  let result = document.getElementById('count').innerHTML;
-  alert(`Игра закончилась, ваш результат:${result}`);
-  var btn = document.getElementById('startgamebtn');
-  btn.hidden = false;
 }

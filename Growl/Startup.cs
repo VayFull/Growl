@@ -1,5 +1,7 @@
 using Growl.Data.Contexts;
 using Growl.Hubs;
+using Growl.Services;
+using Growl.Services.interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IO.Compression;
+using System.Security.Policy;
 
 namespace Growl
 {
@@ -33,6 +36,9 @@ namespace Growl
 
             // In production, the Angular files will be served from this directory
             services.AddSignalR();
+
+            services.AddScoped<HashService>();
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";

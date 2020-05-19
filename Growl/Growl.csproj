@@ -51,6 +51,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Growl.Data\Growl.Data.csproj" />
+    <ProjectReference Include="..\Growl.Services\Growl.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

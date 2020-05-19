@@ -1,5 +1,6 @@
 ﻿using Growl.Data.Contexts;
 using Growl.Domain.Entities;
+using Growl.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,12 @@ namespace Growl.Controllers
     public class UsersController : ControllerBase
     {
         private readonly GrowlDbContext _context;
+        private readonly HashService _hashService;
 
-        public UsersController(GrowlDbContext context)
+        public UsersController(GrowlDbContext context, HashService hashService)
         {
             _context = context;
+            _hashService = hashService;
         }
 
         // GET: api/Users
@@ -48,7 +51,7 @@ namespace Growl.Controllers
                 user.Role = "user";
             if (_context.Users.Any(x=>x.Login==user.Login))
                 return StatusCode(400);
-
+            user.Password = _hashService.GetHashString(user.Password);
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
@@ -75,7 +78,7 @@ namespace Growl.Controllers
         public ActionResult TryLogin(User user)
         {
             var rightUser = _context.Users.Where(x => x.Login == user.Login).FirstOrDefault();
-            if (rightUser!=null && rightUser.Password == user.Password)
+            if (rightUser != null && rightUser.Password == _hashService.GetHashString(user.Password))
             {
                 return StatusCode(202);
             }
