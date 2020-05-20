@@ -54,7 +54,7 @@ export class UserService {
   authorize(user: User) {
     this.getUserWithRole(user).subscribe(data => {
       sessionStorage.setItem("user", user.login);
-      sessionStorage.setItem(user.login, user.role);
+      sessionStorage.setItem(user.login, data.role);
       this.router.navigate(['/rooms']);
     });
     

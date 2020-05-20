@@ -21,4 +21,10 @@ export class NavMenuComponent {
   getUser() {
     return sessionStorage.getItem("user");
   }
+
+  getRole() {
+    var user = this.getUser();
+    var role = sessionStorage.getItem(user);
+    return role;
+  }
 }

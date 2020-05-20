@@ -19,6 +19,9 @@
               [routerLinkActiveOptions]="{ exact: true }">
             <a class="nav-link" [routerLink]="['/']">FAQ</a>
           </li>
+          <li *ngIf="getUser()!=null && getRole()=='admin'" class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link" [routerLink]="['/']">Админка</a>
+          </li>
           <li *ngIf="getUser()==null" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link" [routerLink]="['/login']">Логин</a>
           </li>
