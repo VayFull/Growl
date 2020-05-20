@@ -10,7 +10,7 @@ export class FetchDataComponent {
   public forecasts: Observable<WeatherForecast[]>;
 
   constructor(http: HttpClient) {
-    this.forecasts = http.get<WeatherForecast[]>("https://localhost:44372/" + 'weatherforecast');
+    this.forecasts = http.get<WeatherForecast[]>("https://growl.azurewebsites.net/" + 'weatherforecast');
   };
 }
 

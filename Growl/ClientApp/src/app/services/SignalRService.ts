@@ -14,7 +14,7 @@ export class SignalRService {
   private circles = new Array<Circle>();
   public startConnection = (id: number, login: string) => {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(`https://localhost:44372/chat`)
+      .withUrl(`https://growl.azurewebsites.net/chat`)
       .build();
 
     this.hubConnection

@@ -18,7 +18,7 @@ export class UserService {
   };
 
   constructor(public http: HttpClient, private router: Router) {
-    this.url = "https://localhost:44372/" + "api/users/";
+    this.url = "https://growl.azurewebsites.net/" + "api/users/";
   }
 
   getAllUsers(): Observable<User[]> {

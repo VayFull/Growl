@@ -16,7 +16,7 @@ export class RoomService {
   };
 
   constructor(public http: HttpClient) {
-    this.url = "https://localhost:44372/" + "api/Rooms/";
+    this.url = "https://growl.azurewebsites.net/" + "api/Rooms/";
   }
 
   getAllRooms(): Observable<IRoom[]> {
